@@ -64,18 +64,13 @@ fn list_passwords() {
     }
 }
 
-fn main() -> std::io::Result<()> {
-    
+fn main() -> std::io::Result<(), Box<dyn std::error::Error>> {
+    let main_menu = Menu::new(vec![
+        MenuOption::new("List passwords", list_passwords),
+        MenuOption::new("Add password", add_password),
+        MenuOption::new("Exit", || std::process::exit(0)),
+    ]);
 
-    loop {
-        let main_menu = Menu::new(vec![
-            MenuOption::new("Add Password", add_password),
-            MenuOption::new("List Passwords", list_passwords),
-            MenuOption::new("Exit", || std::process::exit(0)),
-        ]);
-        
-        main_menu.show();
-    }
-
-    
+    main_menu.show();
+    Ok(())
 }
